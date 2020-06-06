@@ -65,9 +65,9 @@ file_n.grid(column=0, row=0, sticky="nw")
 
 ttk.Button(mainframe, text="open", command=open_f).grid(column=0, row=1)
 ttk.Button(mainframe, text="save", command=save_f).grid(column=0, row=2, sticky="s")
-ttk.Button(mainframe, text="save as", command=save_as).grid(column=1, row=2, sticky="s")
+ttk.Button(mainframe, text="save as", command=save_as).grid(column=1, row=2, sticky="sw")
 
-ttk.Label(mainframe, text="openfile").grid(column=1, row=0, sticky="n")
+ttk.Label(mainframe, text="openfile").grid(column=1, row=0, sticky="nw")
 
 file_n.bind('<1>', get_name)
 
