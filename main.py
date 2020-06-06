@@ -20,29 +20,38 @@ def open_f(*args):
     editor.insert(END, line)
     
 def save_f(*args):
-    f = open("test", "w+")
+    f = open("swp", "w+")
     f.write(editor.get("@0,0", END))
     f.close()
-    proc = subprocess.run(["xxd", "-r", "test"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.run(["xxd", "-r", "swp"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    subprocess.run(["rm", "swp"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if proc.stderr:
         messagebox.showerror(title="Error", message=proc.stderr.decode("utf-8"))
         return
-    line = proc.stdout.decode("utf-8")
-    f = open(current_file.get(), "w")
+    line = proc.stdout
+    try:
+        f = open(current_file.get(), "wb")
+    except Exception as er:
+        messagebox.showerror(title="Error", message=er)
     f.write(line)
     f.close()
 
 def save_as(*args):
     filename = filedialog.asksaveasfilename(initialdir = "/", title = "Save file")
-    f = open("test", "w+")
+    f = open("swp", "w+")
     f.write(editor.get("@0,0", END))
     f.close()
-    proc = subprocess.run(["xxd", "-r", "test"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.run(["xxd", "-r", "swp"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    subprocess.run(["rm", "swp"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if proc.stderr:
         messagebox.showerror(title="Error", message=proc.stderr.decode("utf-8"))
         return
-    line = proc.stdout.decode("utf-8")
-    f = open(filename, "w")
+    line = proc.stdout
+    try:
+        f = open(filename, "wb")
+    except Exception as er:
+        messagebox.showerror(title="Error", message=er)
+    
     f.write(line)
     f.close()
 
